@@ -65,7 +65,7 @@ class Logger {
 
   debugLog(level, args) {
     const origin = stack()[3];
-    const log = log4js.getLogger(`${origin.getFileName().split('/').splice(__filename.split('/').length - (this.pathOffset + 2)).join('/')}:${origin.getLineNumber()}`);
+    const log = log4js.getLogger(`${origin.getFileName().split('/').splice(__filename.split('/').length - (this.pathOffset + 3)).join('/')}:${origin.getLineNumber()}`);
     log.setLevel(this.logLevel);
     log[level](...args);
   }
