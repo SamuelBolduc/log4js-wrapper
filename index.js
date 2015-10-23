@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV || 'development';
 class Logger {
   constructor(level, alias) {
     this.alias = alias || null;
-    this.level = level || 'trace';
+    this.logLevel = level || 'trace';
     this.forceAlias = false;
     this.pathOffset = 0;
     this.loggerProd = log4js.getLogger(this.alias || stack()[2].getFileName().split('/').splice(__filename.split('/').length - (2 + this.pathOffset)).join('/'));
@@ -44,10 +44,11 @@ class Logger {
   }
 
   f() {
-    if(env === 'development') {
-      this.debugLog('fatal', arguments);
+    const that = this;
+    if(env === 'development' && !that.forceAlias) {
+      that.debugLog('fatal', arguments);
     } else {
-      this.prodLog('fatal', arguments);
+      that.prodLog('fatal', arguments);
     }
     process.exit(1);
   }
@@ -64,7 +65,8 @@ class Logger {
   }
 
   debugLog(level, args) {
-    const origin = stack()[3];
+    const stackOffset = level === 'fatal' ? 2 : 3;
+    const origin = stack()[stackOffset];
     const log = log4js.getLogger(`${origin.getFileName().split('/').splice(__filename.split('/').length - (this.pathOffset + 3)).join('/')}:${origin.getLineNumber()}`);
     log.setLevel(this.logLevel);
     log[level](...args);
