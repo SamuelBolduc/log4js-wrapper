@@ -1,0 +1,27 @@
+{
+  "name": "log4js-wrapper",
+  "version": "0.0.1-alpha",
+  "description": "Custom wrapper to facilitate some common interactions with log4js",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamuelBolduc/log4js-wrapper.git"
+  },
+  "author": "Samuel Bolduc <sam@samuelbolduc.info> (http://samuelbolduc.info)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SamuelBolduc/log4js-wrapper/issues"
+  },
+  "homepage": "https://github.com/SamuelBolduc/log4js-wrapper#readme",
+  "engines" : { 
+    "node" : ">=4.0.0" 
+  },
+  "engineStrict" : true,
+  "dependencies": {
+    "callsite": "^1.0.0",
+    "log4js": "^0.6.27"
+  }
+}
