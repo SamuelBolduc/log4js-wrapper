@@ -1,6 +1,6 @@
 {
   "name": "log4js-wrapper",
-  "version": "0.0.1-alpha",
+  "version": "1.0.1",
   "description": "Custom wrapper to facilitate some common interactions with log4js",
   "main": "index.js",
   "scripts": {
