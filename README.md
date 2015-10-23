@@ -50,6 +50,7 @@ log.i('This is an info level log');
 log.w('This is a warn level log');
 log.e('This is an error level log');
 log.f('This is a fatal level log');
+log.i('This log should not be shown since the node process whill have been terminated by the fatal log');
 ```
 
 And here's the output in `development`:
