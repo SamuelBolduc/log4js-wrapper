@@ -10,8 +10,13 @@ class Logger {
     this.alias = alias || null;
     this.level = level || 'trace';
     this.forceAlias = false;
-    this.loggerProd = log4js.getLogger(this.alias || stack()[2].getFileName().split('/').splice(__filename.split('/').length - 2).join('/'));
+    this.pathOffset = 0;
+    this.loggerProd = log4js.getLogger(this.alias || stack()[2].getFileName().split('/').splice(__filename.split('/').length - (2 + this.pathOffset)).join('/'));
     this.loggerProd.setLevel(this.logLevel);
+  }
+
+  setPathOffset(offset) {
+    this.pathOffset = offset;
   }
 
   setForceAlias(bool) {
@@ -60,7 +65,7 @@ class Logger {
 
   debugLog(level, args) {
     const origin = stack()[3];
-    const log = log4js.getLogger(`${origin.getFileName().split('/').splice(__filename.split('/').length - 2).join('/')}:${origin.getLineNumber()}`);
+    const log = log4js.getLogger(`${origin.getFileName().split('/').splice(__filename.split('/').length - (this.pathOffset + 2)).join('/')}:${origin.getLineNumber()}`);
     log.setLevel(this.logLevel);
     log[level](...args);
   }
