@@ -6,7 +6,7 @@ The logging output of `log4js-wrapper` depends on the set environment. In `devel
 
 In `production` environment, only the alias is used. This avoids generating an Error stacktrace everytime we log something (like it does in `development` or `test` envs).
 
-This package uses many ES6 features; therefore, you must be running Node v4.0.0 or above, and have the `--harmony-spreadcalls` flag enabled (unless in newer versions this is not longer needed).
+This package uses many ES6 features; therefore, you must be running Node v4.0.0 or above, and have the `--harmony-spreadcalls` flag enabled (unless this is not needed anymore in future Node releases).
 
 ## Usage
 
