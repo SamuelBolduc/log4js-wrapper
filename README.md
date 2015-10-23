@@ -16,7 +16,7 @@ Minimalist example:
 const Logger = require('log4js-wrapper');
 const log = new Logger('debug', 'test-logging');
 
-log.d('This ia a debug level log');
+log.d('This is a debug level log');
 log.t('This is a trace level log');
 log.i('This is an info level log');
 ```
