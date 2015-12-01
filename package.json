@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/SamuelBolduc/log4js-wrapper#readme",
   "engines" : { 
-    "node" : ">=4.0.0" 
+    "node" : ">=5.0.0" 
   },
   "engineStrict" : true,
   "dependencies": {
