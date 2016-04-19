@@ -1,6 +1,6 @@
 {
   "name": "log4js-wrapper",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Custom wrapper to facilitate some common interactions with log4js",
   "main": "index.js",
   "scripts": {
@@ -16,8 +16,8 @@
     "url": "https://github.com/SamuelBolduc/log4js-wrapper/issues"
   },
   "homepage": "https://github.com/SamuelBolduc/log4js-wrapper#readme",
-  "engines" : { 
-    "node" : ">=5.0.0" 
+  "engines" : {
+    "node" : ">=5.0.0"
   },
   "engineStrict" : true,
   "dependencies": {
