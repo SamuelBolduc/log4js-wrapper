@@ -54,7 +54,7 @@ class Logger {
   }
 
   generateCallback(level) {
-    if(this.logLevel === 'off') return;
+    if(this.logLevel === 'off') return function() {};
     const that = this;
     return function() {
       if(env === 'development' && !that.forceAlias) {
