@@ -54,13 +54,14 @@ class Logger {
   }
 
   generateCallback(level) {
-    if(this.logLevel === 'off') return function() {};
     const that = this;
     return function() {
-      if(env === 'development' && !that.forceAlias) {
-        that.debugLog(level, arguments);
-      } else {
-        that.prodLog(level, arguments);
+      if(that.logLevel !== 'off') {
+        if(env === 'development' && !that.forceAlias) {
+          that.debugLog(level, arguments);
+        } else {
+          that.prodLog(level, arguments);
+        }
       }
     };
   }
