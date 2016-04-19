@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV || 'development';
 class Logger {
   constructor(level, alias) {
     this.alias = alias || null;
-    this.logLevel = level || 'trace';
+    this.logLevel = level.toLowerCase() || 'trace';
     this.forceAlias = false;
     this.pathOffset = 0;
     this.loggerProd = log4js.getLogger(this.alias || stack()[2].getFileName().split('/').splice(__filename.split('/').length - (2 + this.pathOffset)).join('/'));
@@ -54,6 +54,7 @@ class Logger {
   }
 
   generateCallback(level) {
+    if(this.logLevel === 'off') return;
     const that = this;
     return function() {
       if(env === 'development' && !that.forceAlias) {
