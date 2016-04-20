@@ -6,12 +6,27 @@ const stack = require('callsite');
 const env = process.env.NODE_ENV || 'development';
 
 class Logger {
-  constructor(level, alias) {
+  constructor(level, alias, filename) {
     this.alias = alias || null;
     this.logLevel = level.toLowerCase() || 'trace';
     this.forceAlias = false;
     this.pathOffset = 0;
-    this.loggerProd = log4js.getLogger(this.alias || stack()[2].getFileName().split('/').splice(__filename.split('/').length - (2 + this.pathOffset)).join('/'));
+    const prodAlias = this.alias || stack()[2].getFileName().split('/').splice(__filename.split('/').length - (2 + this.pathOffset)).join('/');
+    if(typeof filename === 'string') {
+      log4js.configure({
+        appenders: [{
+          type: 'console'
+        }, {
+          type: 'file',
+          filename,
+          category: prodAlias,
+          layout: {
+            type: 'colored'
+          }
+        }]
+      });
+    }
+    this.loggerProd = log4js.getLogger(prodAlias);
     this.loggerProd.setLevel(this.logLevel);
   }
 

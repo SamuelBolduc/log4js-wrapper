@@ -6,6 +6,8 @@ The logging output of `log4js-wrapper` depends on the set environment. In `devel
 
 In `production` environment, only the alias is used. This avoids generating an Error stacktrace everytime we log something (like it does in `development` or `test` envs).
 
+If you supply a filename as a third parameter in the constructor, logs will also be saved in that file.
+
 This package uses many ES6 features; therefore, you must be running Node v5.0.0 or above.
 
 ## Usage
