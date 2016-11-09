@@ -2,6 +2,7 @@
 
 const log4js = require('log4js');
 const stack = require('callsite');
+const util = require('util');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -12,20 +13,28 @@ class Logger {
     this.forceAlias = false;
     this.pathOffset = 0;
     const prodAlias = this.alias || stack()[2].getFileName().split('/').splice(__filename.split('/').length - (2 + this.pathOffset)).join('/');
+    const appenders = [{
+      type: 'console',
+      pattern: '%[%r (%x{pid}) %p %c -%] %m%n',
+      tokens: {
+        pid: () => process.pid,
+      },
+    }];
     if(typeof filename === 'string') {
-      log4js.configure({
-        appenders: [{
-          type: 'console'
-        }, {
-          type: 'file',
-          filename,
-          category: prodAlias,
-          layout: {
-            type: 'colored'
-          }
-        }]
+      appenders.push({
+        type: 'file',
+        filename,
+        category: prodAlias,
+        layout: {
+          type: 'colored',
+        },
       });
     }
+
+    log4js.configure({
+      appenders,
+    });
+
     this.loggerProd = log4js.getLogger(prodAlias);
     this.loggerProd.setLevel(this.logLevel);
   }
@@ -38,44 +47,44 @@ class Logger {
     this.forceAlias = bool;
   }
 
-  t() {
-    this.generateCallback('trace')(...arguments);
+  t(...args) {
+    this.generateCallback('trace')(args);
   }
 
-  d() {
-    this.generateCallback('debug')(...arguments);
+  d(...args) {
+    this.generateCallback('debug')(args);
   }
 
-  e() {
-    this.generateCallback('error')(...arguments);
+  e(...args) {
+    this.generateCallback('error')(args);
   }
 
-  w() {
-    this.generateCallback('warn')(...arguments);
+  w(...args) {
+    this.generateCallback('warn')(args);
   }
 
-  i() {
-    this.generateCallback('info')(...arguments);
+  i(...args) {
+    this.generateCallback('info')(args);
   }
 
-  f() {
+  f(...args) {
     const that = this;
     if(env === 'development' && !that.forceAlias) {
-      that.debugLog('fatal', arguments);
+      that.debugLog('fatal', args);
     } else {
-      that.prodLog('fatal', arguments);
+      that.prodLog('fatal', args);
     }
     process.exit(1);
   }
 
   generateCallback(level) {
     const that = this;
-    return function() {
+    return function(args) {
       if(that.logLevel !== 'off') {
         if(env === 'development' && !that.forceAlias) {
-          that.debugLog(level, arguments);
+          that.debugLog(level, args);
         } else {
-          that.prodLog(level, arguments);
+          that.prodLog(level, args);
         }
       }
     };
@@ -86,7 +95,11 @@ class Logger {
     const origin = stack()[stackOffset];
     const log = log4js.getLogger(`${origin.getFileName().split('/').splice(__filename.split('/').length - (this.pathOffset + 3)).join('/')}:${origin.getLineNumber()}`);
     log.setLevel(this.logLevel);
-    log[level](...args);
+    if(args.length === 1 && typeof args[0] === 'object') {
+      log[level](util.inspect(args[0], {colors: true}));
+    } else {
+      log[level](...args);
+    }
   }
 
   prodLog(level, args) {
