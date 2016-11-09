@@ -15,10 +15,6 @@ class Logger {
     const prodAlias = this.alias || stack()[2].getFileName().split('/').splice(__filename.split('/').length - (2 + this.pathOffset)).join('/');
     const appenders = [{
       type: 'console',
-      pattern: '%[%r (%x{pid}) %p %c -%] %m%n',
-      tokens: {
-        pid: () => process.pid,
-      },
     }];
     if(typeof filename === 'string') {
       appenders.push({
