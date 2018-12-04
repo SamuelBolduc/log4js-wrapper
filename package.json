@@ -16,12 +16,12 @@
     "url": "https://github.com/SamuelBolduc/log4js-wrapper/issues"
   },
   "homepage": "https://github.com/SamuelBolduc/log4js-wrapper#readme",
-  "engines" : {
-    "node" : ">=5.0.0"
+  "engines": {
+    "node": ">=5.0.0"
   },
-  "engineStrict" : true,
+  "engineStrict": true,
   "dependencies": {
     "callsite": "^1.0.0",
-    "log4js": "^1.0.1"
+    "log4js": "^3.0.6"
   }
 }
